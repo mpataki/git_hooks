@@ -1,3 +1,18 @@
 #!/usr/bin/env ruby
 
-puts ARGV
+begin
+  require 'csv'
+rescue LoadError
+  puts 'please `gem install csv`'
+  exit 1
+end
+
+previous_head, new_head, branch_changed = ARGV
+
+exit 0 unless branch_changed
+
+repo_name = `git rev-parse --show-toplevel`.split('/').last
+branch_name = `git rev-parse --abbrev-ref HEAD`
+
+puts repo_name
+puts branch_name
